@@ -1632,6 +1632,13 @@ describe('Page', function() {
       await button.click().catch(err => error = err);
       expect(error.message).toBe('Node is detached from document');
     }));
+    fit('should work with high DPI screens', SX(async function() {
+      await page.setViewport(iPhone.viewport);
+      await page.goto(PREFIX + '/input/button.html');
+      const button = await page.$('button');
+      await button.click();
+      expect(await page.evaluate(() => result)).toBe('Clicked');
+    }));
   });
 
   describe('ElementHandle.hover', function() {
