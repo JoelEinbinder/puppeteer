@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 const fs = require('fs');
+const rm = require('rimraf').sync;
 const path = require('path');
 const SimpleServer = require('./server/SimpleServer');
 const GoldenUtils = require('./golden-utils');
@@ -54,7 +55,7 @@ if (process.env.PPTR_PARALLEL_TESTS)
 const parallelArgIndex = process.argv.indexOf('-j');
 if (parallelArgIndex !== -1)
   parallel = parseInt(process.argv[parallelArgIndex + 1], 10);
-require('events').defaultMaxListeners *= parallel;
+require('events').EventEmitter.defaultMaxListeners *= parallel;
 
 const timeout = slowMo ? 0 : 10 * 1000;
 const runner = new TestRunner({timeout, parallel});
